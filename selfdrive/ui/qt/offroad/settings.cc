@@ -442,7 +442,7 @@ void SettingsWindow::showEvent(QShowEvent *event) {
     {"네트워크", network_panel(this)},
     {"토글메뉴", new TogglesPanel(this)},
     {"소프트웨어", new SoftwarePanel()},
-    {"Community", community_panel()},
+    {"커뮤니티", community_panel()},
   };
 
   sidebar_layout->addSpacing(45);
