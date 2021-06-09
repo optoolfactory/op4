@@ -207,9 +207,9 @@ def thermald_thread():
         no_panda_cnt = 0
         startup_conditions["ignition"] = pandaState.pandaState.ignitionLine or pandaState.pandaState.ignitionCan
 
-      startup_conditions["hardware_supported"] = True #pandaState.pandaState.pandaType not in [log.PandaState.PandaType.whitePanda,
-                                                      #                                   log.PandaState.PandaType.greyPanda]
-      set_offroad_alert_if_changed("Offroad_HardwareUnsupported", not startup_conditions["hardware_supported"])
+      #startup_conditions["hardware_supported"] = True #pandaState.pandaState.pandaType not in [log.PandaState.PandaType.whitePanda,
+      #                                                #                                   log.PandaState.PandaType.greyPanda]
+      #set_offroad_alert_if_changed("Offroad_HardwareUnsupported", not startup_conditions["hardware_supported"])
 
       # Setup fan handler on first connect to panda
       if handle_fan is None and pandaState.pandaState.pandaType != log.PandaState.PandaType.unknown:
@@ -300,7 +300,7 @@ def thermald_thread():
     now = datetime.datetime.utcnow()
 
     # show invalid date/time alert
-    startup_conditions["time_valid"] = True #(now.year > 2020) or (now.year == 2020 and now.month >= 10)
+    startup_conditions["time_valid"] = True if ((now.year > 2020) or (now.year == 2020 and now.month >= 10)) else True # set True for battery less EON otherwise, set False.
     set_offroad_alert_if_changed("Offroad_InvalidTime", (not startup_conditions["time_valid"]))
 
     # Show update prompt
