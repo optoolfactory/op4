@@ -172,8 +172,8 @@ DevicePanel::DevicePanel(QWidget* parent) : QWidget(parent) {
   }, "", this));
 
   QString brand = params.getBool("Passive") ? "블랙박스" : "오픈파일럿";
-  offroad_btns.append(new ButtonControl("오픈파일럿 제거 " + brand, "오픈파일럿 제거", "", [=]() {
-    if (ConfirmationDialog::confirm("오픈파일럿을 제거하시겠습니까?", this)) {
+  offroad_btns.append(new ButtonControl("오픈파일럿 삭제 " + brand, "오픈파일럿 삭제", "", [=]() {
+    if (ConfirmationDialog::confirm("오픈파일럿을 삭제하시겠습니까?", this)) {
       Params().putBool("DoUninstall", true);
     }
   }, "", this));
