@@ -196,11 +196,11 @@ DevicePanel::DevicePanel(QWidget* parent) : QWidget(parent) {
     }
   });
 
-  QPushButton *poweroff_btn = new QPushButton("Power Off");
+  QPushButton *poweroff_btn = new QPushButton("전원 끄기");
   poweroff_btn->setStyleSheet("background-color: #E22C2C;");
   power_layout->addWidget(poweroff_btn);
   QObject::connect(poweroff_btn, &QPushButton::released, [=]() {
-    if (ConfirmationDialog::confirm("Are you sure you want to power off?", this)) {
+    if (ConfirmationDialog::confirm("전원을 끄시겠습니까?", this)) {
       Hardware::poweroff();
     }
   });
@@ -308,11 +308,11 @@ QWidget * network_panel(QWidget * parent) {
   layout->setSpacing(30);
 
   // wifi + tethering buttons
-  layout->addWidget(new ButtonControl("WiFi Settings", "OPEN", "",
+  layout->addWidget(new ButtonControl("네트워크 설정열기", "열기", "",
                                       [=]() { HardwareEon::launch_wifi(); }));
   layout->addWidget(horizontal_line());
 
-  layout->addWidget(new ButtonControl("Tethering Settings", "OPEN", "",
+  layout->addWidget(new ButtonControl("테더링 설정열기", "열기", "",
                                       [=]() { HardwareEon::launch_tethering(); }));
   layout->addWidget(horizontal_line());
 
@@ -336,45 +336,45 @@ QWidget * community_panel() {
   //toggles_list->setMargin(50);
 
   toggles_list->addWidget(new ParamControl("UseClusterSpeed",
-                                            "Use Cluster Speed",
-                                            "Use cluster speed instead of wheel speed.",
+                                            "계기반 속도 사용",
+                                            "휠 속도 대신에 계기반 속도 사용",
                                             "../assets/offroad/icon_road.png"
                                               ));
 
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("LongControlEnabled",
-                                            "Enable HKG Long Control",
-                                            "warnings: it is beta, be careful!! Openpilot will control the speed of your car",
+                                            "롱컨트롤 사용",
+                                            "경고 : 오픈파일럿이 속도를 조절합니다. 주의 하시길 바랍니다.",
                                             "../assets/offroad/icon_road.png"
                                               ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("MadModeEnabled",
-                                            "Enable HKG MAD mode",
-                                            "Openpilot will engage when turn cruise control on",
-                                            "../assets/offroad/icon_openpilot.png"
+                                            "매드모드 사용",
+                                            "HKG 매드모드 사용. 가감속을 사용 하지 않아도 핸들 조향을 사용합니다.",
+                                           "../assets/offroad/icon_openpilot.png"
                                               ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("LaneChangeEnabled",
-                                            "Enable Lane Change Assist",
-                                            "Perform assisted lane changes with openpilot by checking your surroundings for safety, activating the turn signal and gently nudging the steering wheel towards your desired lane. openpilot is not capable of checking if a lane change is safe. You must continuously observe your surroundings to use this feature.",
+                                            "차선 변경 사용",
+                                            "주변의 안전을 확인하고, 방향 지시등을 활성화하고, 원하는 차선을 향해 스티어링 휠을 부드럽게 밀어서 오픈 파일럿으로 보조 차선 변경을 수행하십시오. openpilot은 차선 변경이 안전한지 확인할 수 없습니다. 이 기능을 사용하려면 주변을 지속적으로 관찰해야합니다.",
                                             "../assets/offroad/icon_road.png"
                                               ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("AutoLaneChangeEnabled",
-                                            "Enable Auto Lane Change(Nudgeless)",
-                                            "warnings: it is beta, be careful!!",
+                                            "자동 차선변경 사용",
+                                            "경고 : 베타이기 때문에 조심히 사용하세요!!",
                                             "../assets/offroad/icon_road.png"
                                               ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("SccSmootherSlowOnCurves",
-                                            "Enable Slow On Curves",
+                                            "커브 감속 사용",
                                             "",
                                             "../assets/offroad/icon_road.png"
                                             ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("SccSmootherSyncGasPressed",
-                                            "Sync set speed on gas pressed",
-                                            "",
+                                            "크루즈 속도의 동기화",
+                                            "크루즈 속도를 설정 후 엑셀로 인해 설정 속도보다 가속 속도가 높아지면 그 속도에 크루즈 설정 속도가 동기화 됩니다.",
                                             "../assets/offroad/icon_road.png"
                                             ));
   toggles_list->addWidget(horizontal_line());
@@ -385,14 +385,14 @@ QWidget * community_panel() {
                                             ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("ShowDebugUI",
-                                            "Show Debug UI",
-                                            "",
+                                            "디버그 내용 보기",
+                                            "가감속 등 디버그 내용을 화면에 띄웁니다.",
                                             "../assets/offroad/icon_shell.png"
                                             ));
 
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("CustomLeadMark",
-                                            "Use custom lead mark",
+                                            "선행차 사용자 정의 마크 사용",
                                             "",
                                             "../assets/offroad/icon_road.png"
                                             ));
