@@ -34,7 +34,7 @@ void SshControl::refresh() {
     setText("제거");
   } else {
     username_label.setText("");
-    setText(");
+    setText("추가");
   }
   setEnabled(true);
 }
