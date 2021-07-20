@@ -177,7 +177,7 @@ SetupWidget::SetupWidget(QWidget* parent) : QFrame(parent) {
   QVBoxLayout* qrLayout = new QVBoxLayout(q);
 
   qrLayout->addSpacing(30);
-  QLabel* qrLabel = new QLabel("주행중에는 손은 핸들에\n시선은 전방주시\n  안전운전 하세요");
+  QLabel* qrLabel = new QLabel("Scan QR code to pair!");
   qrLabel->setWordWrap(true);
   qrLabel->setAlignment(Qt::AlignHCenter);
   qrLabel->setStyleSheet(R"(
