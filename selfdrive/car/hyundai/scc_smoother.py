@@ -56,6 +56,7 @@ class SccSmoother:
 
   def __init__(self, gas_factor, brake_factor, curvature_factor):
 
+    self.state = int(Params().get('SccSmootherState'))
     self.longcontrol = Params().get_bool('LongControlEnabled')
     self.slow_on_curves = Params().get_bool('SccSmootherSlowOnCurves')
     self.sync_set_speed_while_gas_pressed = Params().get_bool('SccSmootherSyncGasPressed')
@@ -119,6 +120,25 @@ class SccSmoother:
   def is_active(self, frame):
     return frame - self.started_frame <= max(ALIVE_COUNT) + max(WAIT_COUNT)
 
+  def dispatch_buttons(self, CC, CS):
+    changed = False
+    if self.last_cruise_buttons != CS.cruise_buttons:
+      self.last_cruise_buttons = CS.cruise_buttons
+
+      if not CS.cruiseState_enabled:
+        if (not self.switch_only_with_gap and CS.cruise_buttons == Buttons.CANCEL) or CS.cruise_buttons == Buttons.GAP_DIST:
+          self.state += 1
+          if self.state >= CruiseState.COUNT:
+            self.state = 0
+
+          Params().put('SccSmootherState', str(self.state))
+          self.state_changed_alert = True
+          changed = True
+
+    CC.sccSmoother.state = self.state
+    return changed
+
+  
   def inject_events(self, events):
     if self.slowing_down_sound_alert:
       self.slowing_down_sound_alert = False
