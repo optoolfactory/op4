@@ -855,33 +855,38 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_BASELINE);
   const int text_x = rect.centerX();
 
-  if(is_cruise_set)
+  if (is_cruise_set)
   {
     char str[256];
 
-    if(s->scene.is_metric)
+    if(!longControl && scc_smoother.getState() == 0)
+    {
+        ui_draw_text(s, text_x, 148, "STOCK", 25 * 2.5, COLOR_WHITE, "sans-semibold");
+    }
+    else
+    {
         snprintf(str, sizeof(str), "%d", (int)(cruiseVirtualMaxSpeed + 0.5));
-    else
-        snprintf(str, sizeof(str), "%d", (int)(cruiseVirtualMaxSpeed*0.621371 + 0.5));
+        ui_draw_text(s, text_x, 148, str, 33 * 2.5, COLOR_WHITE, "sans-semibold");
+    }
 
-    ui_draw_text(s, text_x, 98+bdr_s, str, 33 * 2.5, COLOR_WHITE, "sans-semibold");
-
-    if(s->scene.is_metric)
-        snprintf(str, sizeof(str), "%d", (int)(cruiseRealMaxSpeed + 0.5));
-    else
-        snprintf(str, sizeof(str), "%d", (int)(cruiseRealMaxSpeed*0.621371 + 0.5));
-
-    ui_draw_text(s, text_x, 192+bdr_s, str, 48 * 2.5, COLOR_WHITE, "sans-bold");
+    snprintf(str, sizeof(str), "%d", (int)(cruiseRealMaxSpeed + 0.5));
+    ui_draw_text(s, text_x, 242, str, 48 * 2.5, COLOR_WHITE, "sans-bold");
   }
   else
   {
-    if(longControl)
-        ui_draw_text(s, text_x, 98+bdr_s, "OP", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    if(!longControl && scc_smoother.getState() == 0)
+        ui_draw_text(s, text_x, 148, "STOCK", 25 * 2.5, COLOR_WHITE, "sans-semibold");
     else
-        ui_draw_text(s, text_x, 98+bdr_s, "MAX", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    {
+        if(longControl)
+            ui_draw_text(s, text_x, 148, "OP", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+        else
+            ui_draw_text(s, text_x, 148, "SCC", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    }
 
-    ui_draw_text(s, text_x, 192+bdr_s, "N/A", 42 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    ui_draw_text(s, text_x, 242, "N/A", 42 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
   }
+
 }
 
 static void ui_draw_vision_speed(UIState *s) {
