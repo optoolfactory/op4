@@ -312,6 +312,7 @@ struct CarControl {
   sccSmoother @8 :SccSmoother;
 
   struct SccSmoother {
+    state @0 :UInt32;
     longControl @0:Bool;
 
     cruiseVirtualMaxSpeed @1 :Float32;
