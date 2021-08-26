@@ -315,18 +315,23 @@ struct CarControl {
   sccSmoother @8 :SccSmoother;
 
   struct SccSmoother {
-    longControl @0:Bool;
+    state @0 :UInt32;
+    longControl @1:Bool;
 
-    applyMaxSpeed @1 :Float32;
-    cruiseMaxSpeed @2 :Float32;
+    applyMaxSpeed @2 :Float32;
+    cruiseMaxSpeed @3 :Float32;
 
-    logMessage @3 :Text;
+    logMessage @4 :Text;
 
-    roadLimitSpeedActive @4 :Int32;
-    roadLimitSpeed @5 :UInt32;
-    roadLimitSpeedLeftDist @6 :UInt32;
+    roadLimitSpeedActive @5 :Int32;
+    roadLimitSpeed @6 :UInt32;
+    roadLimitSpeedLeftDist @7 :UInt32;
 
-    autoTrGap @7 :UInt32;
+    autoTrGap @8 :UInt32;
+    
+    cruiseVirtualMaxSpeed @9 :Float32;
+    cruiseRealMaxSpeed @10 :Float32;
+
   }
 
   struct Actuators {
