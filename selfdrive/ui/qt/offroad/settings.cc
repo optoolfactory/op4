@@ -419,7 +419,7 @@ QWidget * community_panel() {
                                             "../assets/offroad/icon_road.png"
                                               ));  
   toggles_list->addWidget(horizontal_line());
-  toggles_list->addWidget(new ParamControl("SccSmootherEnabled",
+  toggles_list->addWidget(new ParamControl("SccSmootherState",
                                             "가감속 스무서 사용",
                                             "N Smoother. 순정 ASCC 기능을 이용하여 가속과 감속을 부드럽게 할 수 있도록 도와 줍니다. 사용법을 정확히 인지하고 사용하십시오.",
                                             "../assets/offroad/icon_road.png"
