@@ -136,11 +136,6 @@ struct CarEvent @0x9b1657f34caf3ad3 {
 
     slowingDownSpeed @108;
     slowingDownSpeedSound @109;
-    
-    # scc smoother
-    sccSmootherStatus @110;
-    slowingDownSpeed @111;
-    slowingDownSpeedSound @112;
   }
 }
 
@@ -315,23 +310,18 @@ struct CarControl {
   sccSmoother @8 :SccSmoother;
 
   struct SccSmoother {
-    state @0 :UInt32;
-    longControl @1:Bool;
+    longControl @0:Bool;
 
-    applyMaxSpeed @2 :Float32;
-    cruiseMaxSpeed @3 :Float32;
+    applyMaxSpeed @1 :Float32;
+    cruiseMaxSpeed @2 :Float32;
 
-    logMessage @4 :Text;
+    logMessage @3 :Text;
 
-    roadLimitSpeedActive @5 :Int32;
-    roadLimitSpeed @6 :UInt32;
-    roadLimitSpeedLeftDist @7 :UInt32;
+    roadLimitSpeedActive @4 :Int32;
+    roadLimitSpeed @5 :UInt32;
+    roadLimitSpeedLeftDist @6 :UInt32;
 
-    autoTrGap @8 :UInt32;
-    
-    cruiseVirtualMaxSpeed @9 :Float32;
-    cruiseRealMaxSpeed @10 :Float32;
-
+    autoTrGap @7 :UInt32;
   }
 
   struct Actuators {
