@@ -240,6 +240,7 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"StockNaviDecelEnabled", PERSISTENT},
     {"ShowDebugUI", PERSISTENT},
     {"CustomLeadMark", PERSISTENT},
+    {"SccSmootherEnabled", PERSISTENT},
 };
 
 } // namespace
