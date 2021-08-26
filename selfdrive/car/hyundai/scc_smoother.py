@@ -109,24 +109,6 @@ class SccSmoother:
     self.curve_speed_ms = 0.
     self.stock_weight = 0.
 
-
-  def dispatch_buttons(self, CC, CS):
-    changed = False
-    if self.last_cruise_buttons != CS.cruise_buttons:
-      self.last_cruise_buttons = CS.cruise_buttons
-
-      if not CS.cruiseState_enabled:
-        if (not self.switch_only_with_gap and CS.cruise_buttons == Buttons.CANCEL) or CS.cruise_buttons == Buttons.GAP_DIST:
-          self.state += 1
-          if self.state >= CruiseState.COUNT:
-            self.state = 0
-
-          Params().put('SccSmootherState', str(self.state))
-          self.state_changed_alert = True
-          changed = True
-
-    CC.sccSmoother.state = self.state
-    return changed
   
   def reset(self):
 
@@ -151,7 +133,25 @@ class SccSmoother:
 
   def is_active(self, frame):
     return frame - self.started_frame <= max(ALIVE_COUNT) + max(WAIT_COUNT)
+  
+  def dispatch_buttons(self, CC, CS):
+    changed = False
+    if self.last_cruise_buttons != CS.cruise_buttons:
+      self.last_cruise_buttons = CS.cruise_buttons
 
+      if not CS.cruiseState_enabled:
+        if (not self.switch_only_with_gap and CS.cruise_buttons == Buttons.CANCEL) or CS.cruise_buttons == Buttons.GAP_DIST:
+          self.state += 1
+          if self.state >= CruiseState.COUNT:
+            self.state = 0
+
+          Params().put('SccSmootherState', str(self.state))
+          self.state_changed_alert = True
+          changed = True
+
+    CC.sccSmoother.state = self.state
+    return changed
+  
   def inject_events(self, events):
     
     if self.state_changed_alert:
@@ -266,8 +266,14 @@ class SccSmoother:
         self.wait_timer = max(ALIVE_COUNT) + max(WAIT_COUNT)
         return
 
-    if not ascc_enabled:
-      self.reset()
+      accel, override_acc = self.cal_acc(apply_accel, CS, clu11_speed, controls.sm)
+
+      else:
+        accel = 0.
+        CC.sccSmoother.state = self.state = CruiseState.STOCK
+      
+       if not ascc_enabled:
+         self.reset()
 
     self.cal_target_speed(CS, clu11_speed, controls)
 
