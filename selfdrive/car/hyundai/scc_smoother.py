@@ -119,6 +119,7 @@ class SccSmoother:
 
     self.max_speed_clu = 0.
     self.curve_speed_ms = 0.
+    self.fused_decel.clear()
 
     self.slowing_down = False
     self.slowing_down_alert = False
@@ -272,7 +273,7 @@ class SccSmoother:
       accel = 0.
       CC.sccSmoother.state = self.state = CruiseState.STOCK
       
-    if not ascc_enabled:
+      if not ascc_enabled:
          self.reset()
 
     self.cal_target_speed(accel, CC, CS, clu11_speed, controls)
@@ -326,6 +327,41 @@ class SccSmoother:
 
     return None
 
+  def cal_acc(self, apply_accel, CS, clu11_speed, sm):
+
+    cruise_gap = clip(CS.cruise_gap, 1., 4.)
+
+    override_acc = 0.
+    #v_ego = clu11_speed * CV.KPH_TO_MS
+    op_accel = apply_accel * CV.MS_TO_KPH
+
+    lead = self.get_lead(sm)
+    if lead is None:
+      accel = op_accel
+    else:
+
+      d = lead.dRel - 5.
+
+      # Tuned by stonerains
+
+      if 0. < d < -lead.vRel * (7.7 + cruise_gap) * 2. and lead.vRel < -1.:
+        t = d / lead.vRel
+        acc = -(lead.vRel / t) * CV.MS_TO_KPH * 1.84
+        override_acc = acc
+        accel = (op_accel + acc) / 2.
+      else:
+        if 40 > lead.dRel > 12 and clu11_speed < 15.0 * CV.MS_TO_KPH:
+          accel = op_accel * 3.8
+        else:
+          accel = op_accel * interp(clu11_speed, [0., 30., 38., 50., 51., 60., 100.],
+                                    [2.3, 3.4, 3.2, 1.7, 1.65, 1.4, 1.0])
+
+    if accel > 0.:
+      accel *= self.accel_gain * interp(clu11_speed, [35., 60., 100.], [1.5, 1.25, 1.2])
+    else:
+      accel *= self.decel_gain * 1.8
+
+    return clip(accel, -LIMIT_DECEL, LIMIT_ACCEL), override_acc
   def get_long_lead_speed(self, CS, clu11_speed, sm):
 
     if self.longcontrol:
