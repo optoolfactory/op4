@@ -19,6 +19,9 @@ SYNC_MARGIN = 3.
 MIN_SET_SPEED_KPH = V_CRUISE_MIN
 MAX_SET_SPEED_KPH = V_CRUISE_MAX
 
+LIMIT_ACCEL = 10.
+LIMIT_DECEL = 18.
+
 ALIVE_COUNT = [6, 8]
 WAIT_COUNT = [12, 13, 14, 15, 16]
 AliveIndex = 0
@@ -33,6 +36,11 @@ ButtonPrev = ButtonType.unknown
 ButtonCnt = 0
 LongPressed = False
 
+class CruiseState:
+  STOCK = 0
+  SMOOTH = 1
+  COUNT = 2
+  
 class SccSmoother:
 
   @staticmethod
@@ -56,7 +64,7 @@ class SccSmoother:
   def kph_to_clu(self, kph):
     return int(kph * CV.KPH_TO_MS * self.speed_conv_to_clu)
 
-  def __init__(self):
+  def __init__(self, accel_gain, decel_gain):
 
     self.longcontrol = Params().get_bool('LongControlEnabled')
     self.slow_on_curves = Params().get_bool('SccSmootherSlowOnCurves')
