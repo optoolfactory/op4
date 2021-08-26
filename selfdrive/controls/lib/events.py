@@ -227,7 +227,8 @@ def startup_fuzzy_fingerprint_alert(CP: car.CarParams, sm: messaging.SubMaster, 
     Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., 15.)
 
 def auto_lane_change_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: bool) -> Alert:
-  alc_timer = sm['lateralPlan'].autoLaneChangeTimer
+  alc_timer = sm['lateralPlan'].
+  Timer
   return Alert(
     "자동차선변경이 %d초 뒤에 시작됩니다" % alc_timer,
     "변경할 차선의 차량들을 확인하세요",
@@ -900,6 +901,11 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
     ET.WARNING: auto_lane_change_alert,
   },
 
+  EventName.sccSmootherStatus: {
+    ET.PERMANENT: Alert("","", AlertStatus.normal, AlertSize.none,
+      Priority.HIGH, VisualAlert.none, AudibleAlert.chimeWarning1, .4, .1, .1),
+  },
+  
   EventName.slowingDownSpeed: {
     ET.PERMANENT: Alert("속도를 조절합니다.","", AlertStatus.normal, AlertSize.small,
       Priority.MID, VisualAlert.none, AudibleAlert.none, 0., .1, .1),
