@@ -66,17 +66,26 @@ class SccSmoother:
 
   def __init__(self, accel_gain, decel_gain):
 
+
+    self.state = int(Params().get('SccSmootherState'))
+    self.scc_smoother_enabled = Params().get_bool('SccSmootherEnabled')
+    
     self.longcontrol = Params().get_bool('LongControlEnabled')
     self.slow_on_curves = Params().get_bool('SccSmootherSlowOnCurves')
     self.sync_set_speed_while_gas_pressed = Params().get_bool('SccSmootherSyncGasPressed')
     self.is_metric = Params().get_bool('IsMetric')
+    
+    self.accel_gain = accel_gain
+    self.decel_gain = decel_gain
 
     self.speed_conv_to_ms = CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS
     self.speed_conv_to_clu = CV.MS_TO_KPH if self.is_metric else CV.MS_TO_MPH
 
     self.min_set_speed_clu = self.kph_to_clu(MIN_SET_SPEED_KPH)
     self.max_set_speed_clu = self.kph_to_clu(MAX_SET_SPEED_KPH)
-
+    
+    self.last_cruise_buttons = Buttons.NONE
+    
     self.target_speed = 0.
 
     self.started_frame = 0
@@ -86,6 +95,8 @@ class SccSmoother:
 
     self.alive_count = ALIVE_COUNT
     random.shuffle(WAIT_COUNT)
+    
+    self.state_changed_alert = False
 
     self.slowing_down = False
     self.slowing_down_alert = False
@@ -98,6 +109,25 @@ class SccSmoother:
     self.curve_speed_ms = 0.
     self.stock_weight = 0.
 
+
+  def dispatch_buttons(self, CC, CS):
+    changed = False
+    if self.last_cruise_buttons != CS.cruise_buttons:
+      self.last_cruise_buttons = CS.cruise_buttons
+
+      if not CS.cruiseState_enabled:
+        if (not self.switch_only_with_gap and CS.cruise_buttons == Buttons.CANCEL) or CS.cruise_buttons == Buttons.GAP_DIST:
+          self.state += 1
+          if self.state >= CruiseState.COUNT:
+            self.state = 0
+
+          Params().put('SccSmootherState', str(self.state))
+          self.state_changed_alert = True
+          changed = True
+
+    CC.sccSmoother.state = self.state
+    return changed
+  
   def reset(self):
 
     self.wait_timer = 0
@@ -123,6 +153,11 @@ class SccSmoother:
     return frame - self.started_frame <= max(ALIVE_COUNT) + max(WAIT_COUNT)
 
   def inject_events(self, events):
+    
+    if self.state_changed_alert:
+      self.state_changed_alert = False
+      events.add(EventName.sccSmootherStatus)
+      
     if self.slowing_down_sound_alert:
       self.slowing_down_sound_alert = False
       events.add(EventName.slowingDownSpeedSound)
@@ -211,7 +246,22 @@ class SccSmoother:
                    and 1 < CS.cruiseState_speed < 255 and not CS.brake_pressed
 
     if not self.longcontrol:
-      if not ascc_enabled or CS.standstill or CS.cruise_buttons != Buttons.NONE:
+
+      if not self.scc_smoother_enabled:
+        self.reset()
+        return
+
+      if self.dispatch_buttons(CC, CS):
+        self.reset()
+        return
+
+      if self.state == CruiseState.STOCK or not ascc_enabled or CS.standstill or CS.cruise_buttons != Buttons.NONE:
+
+        #CC.sccSmoother.logMessage = '{:.2f},{:d},{:d},{:d},{:d},{:.1f},{:d},{:d},{:d}' \
+        #  .format(float(apply_accel*CV.MS_TO_KPH), int(CS.acc_mode), int(enabled), int(CS.cruiseState_enabled), int(CS.standstill), float(CS.cruiseState_speed),
+        #          int(CS.cruise_buttons), int(CS.brake_pressed), int(CS.gas_pressed))
+
+        CC.sccSmoother.logMessage = max_speed_log
         self.reset()
         self.wait_timer = max(ALIVE_COUNT) + max(WAIT_COUNT)
         return
