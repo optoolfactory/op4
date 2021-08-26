@@ -272,7 +272,7 @@ class SccSmoother:
       accel = 0.
       CC.sccSmoother.state = self.state = CruiseState.STOCK
       
-       if not ascc_enabled:
+    if not ascc_enabled:
          self.reset()
 
     self.cal_target_speed(accel, CC, CS, clu11_speed, controls)
