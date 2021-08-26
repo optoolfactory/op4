@@ -268,14 +268,14 @@ class SccSmoother:
 
       accel, override_acc = self.cal_acc(apply_accel, CS, clu11_speed, controls.sm)
 
-      else:
-        accel = 0.
-        CC.sccSmoother.state = self.state = CruiseState.STOCK
+    else:
+      accel = 0.
+      CC.sccSmoother.state = self.state = CruiseState.STOCK
       
        if not ascc_enabled:
          self.reset()
 
-    self.cal_target_speed(CS, clu11_speed, controls)
+    self.cal_target_speed(accel, CC, CS, clu11_speed, controls)
 
     CC.sccSmoother.logMessage = max_speed_log
 
