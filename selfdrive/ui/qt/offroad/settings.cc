@@ -44,76 +44,75 @@ TogglesPanel::TogglesPanel(QWidget *parent) : QWidget(parent) {
   QList<ParamControl*> toggles;
 
   toggles.append(new ParamControl("OpenpilotEnabledToggle",
-                                  "Enable openpilot",
-                                  "Use the openpilot system for adaptive cruise control and lane keep driver assistance. Your attention is required at all times to use this feature. Changing this setting takes effect when the car is powered off.",
+                                  "오픈파일럿 사용",
+                                  "어댑티브 크루즈 컨트롤 및 차선 유지 지원을 위해 오픈파일럿 시스템을 사용하십시오. 이 기능을 사용하려면 항상 주의를 기울여야 합니다. 이 설정을 변경하는 것은 자동차의 전원이 꺼졌을 때 적용됩니다.",
                                   "../assets/offroad/icon_openpilot.png",
                                   this));
   toggles.append(new ParamControl("IsLdwEnabled",
-                                  "Enable Lane Departure Warnings",
-                                  "Receive alerts to steer back into the lane when your vehicle drifts over a detected lane line without a turn signal activated while driving over 31mph (50kph).",
+                                  "차선이탈 경보 사용",
+                                  "50km/h이상의 속도로 주행하는 동안 방향 지시등이 활성화되지 않은 상태에서 차량이 감지된 차선 위를 넘어갈 경우 원래 차선으로 다시 방향을 전환하도록 경고를 보냅니다.",
                                   "../assets/offroad/icon_warning.png",
                                   this));
   toggles.append(new ParamControl("IsRHD",
-                                  "Enable Right-Hand Drive",
-                                  "Allow openpilot to obey left-hand traffic conventions and perform driver monitoring on right driver seat.",
+                                  "우핸들 운전방식 사용",
+                                  "오픈파일럿이 좌측 교통 규칙을 준수하도록 허용하고 우측 운전석에서 운전자 모니터링을 수행하십시오.",
                                   "../assets/offroad/icon_openpilot_mirrored.png",
                                   this));
   toggles.append(new ParamControl("IsMetric",
-                                  "Use Metric System",
-                                  "Display speed in km/h instead of mp/h.",
+                                  "미터법 사용",
+                                  "mi/h 대신 km/h 단위로 속도를 표시합니다.",
                                   "../assets/offroad/icon_metric.png",
                                   this));
   toggles.append(new ParamControl("CommunityFeaturesToggle",
-                                  "Enable Community Features",
-                                  "Use features from the open source community that are not maintained or supported by comma.ai and have not been confirmed to meet the standard safety model. These features include community supported cars and community supported hardware. Be extra cautious when using these features",
+                                  "커뮤니티 기능 사용",
+                                  "comma.ai에서 유지 또는 지원하지 않고 표준 안전 모델에 부합하는 것으로 확인되지 않은 오픈 소스 커뮤니티의 기능을 사용하십시오. 이러한 기능에는 커뮤니티 지원 자동차와 커뮤니티 지원 하드웨어가 포함됩니다. 이러한 기능을 사용할 때는 각별히 주의해야 합니다.",
                                   "../assets/offroad/icon_shell.png",
                                   this));
 
   toggles.append(new ParamControl("UploadRaw",
-                                  "Upload Raw Logs",
-                                  "Upload full logs and full resolution video by default while on WiFi. If not enabled, individual logs can be marked for upload at my.comma.ai/useradmin.",
+                                 "원본로그 업로드",
+                                 "Wi-Fi에 연결하면 기본적으로 전체 로그 및 전체 해상도 비디오를 업로드합니다. 활성화되지 않은 경우 my.comma.ai/useradmin에서 개별 로그를 업로드 용으로 표시 할 수 있습니다.",
                                   "../assets/offroad/icon_network.png",
                                   this));
 
   ParamControl *record_toggle = new ParamControl("RecordFront",
-                                                 "Record and Upload Driver Camera",
-                                                "Upload data from the driver facing camera and help improve the driver monitoring algorithm.",
+                                                 "운전자 영상 녹화 및 업로드",
+                                                "운전자 모니터링 카메라에서 데이터를 업로드하고 운전자 모니터링 알고리즘을 개선하십시오.",
                                                 "../assets/offroad/icon_monitoring.png",
                                                 this);
   toggles.append(record_toggle);
   toggles.append(new ParamControl("EndToEndToggle",
-                                   "\U0001f96c Disable use of lanelines (Alpha) \U0001f96c",
-                                   "In this mode openpilot will ignore lanelines and just drive how it thinks a human would.",
+                                   "\U0001f96c 차선이 없을 때 사용 버전 (알파) \U0001f96c",
+                                   "이 모드에서 openpilot은 차선을 무시하고 사람이 생각하는대로 운전합니다.",
                                    "../assets/offroad/icon_road.png",
                                    this));
   toggles.append(new ParamControl("TurnVisionControl",
-                                  "Enable vision based turn control",
-                                  "Use vision path predictions to estimate the appropiate speed to drive through turns ahead.",
-                                  "../assets/offroad/icon_road.png",
+									"비전 기반 회전 제어 활성화", 
+									"비전 경로 예측을 사용하여 전방 회전을 통과하는 데 적절한 속도를 추정합니다.",
+									"../assets/offroad/icon_road.png",
                                   this));
   toggles.append(new ParamControl("SpeedLimitControl",
-                                  "Enable Speed Limit Control",
-                                  "Use speed limit signs information from map data and car interface to automatically adapt cruise speed to road limits.",
-                                  "../assets/offroad/icon_speed_limit.png",
+									"속도 제한 제어 활성화",
+									"지도 데이터 및 자동차 인터페이스의 속도 제한 표지판 정보를 사용하여 순항 속도를 도로 제한에 자동으로 적응시킵니다.",                                  "../assets/offroad/icon_speed_limit.png",
                                   this));
   toggles.append(new ParamControl("HyundaiNaviSL",
-                                  "Pull Hyundai Navigation Speed Limit",
-                                  "Use speed limit information from Hyundai's built in navigation on newer Hyundai models.",
+                                  "순정네비게이션 속도제한 가져오기",
+                                  "현대차 최신 모델에서 현대차 내장 내비게이션의 제한 속도 정보를 사용하세요.",
                                   "../assets/offroad/icon_speed_limit.png",
                                   this));
   toggles.append(new ParamControl("SpeedLimitPercOffset",
-                                  "Enable Speed Limit Offset",
-                                  "Set speed limit slightly higher than actual speed limit for a more natural drive.",
+                                  "속도 제한 오프셋 활성화",
+                                  "보다 자연스러운 주행을 위해 제한 속도를 실제 제한 속도보다 약간 높게 설정하십시오.",
                                   "../assets/offroad/icon_speed_limit.png",
                                   this));
   toggles.append(new ParamControl("SpeedLimitDelayIncrease",
-                                  "Delay increase of speed limit",
-                                  "Delays the increase of the speed limit to give time to the driver to cancel the increase by changing cruise speed.",
+                                  "속도 제한 지연 증가",
+                                  "속도 제한 증가를 지연시켜 운전자가 순항 속도를 변경하여 증가를 취소할 시간을 줍니다.",
                                   "../assets/offroad/icon_speed_limit.png",
                                   this));
   toggles.append(new ParamControl("TurnSpeedControl",
-                                  "Enable Map Data Turn Control",
-                                  "Use curvature info from map data to define speed limits to take turns ahead",
+                                  "지도 데이터 회전 제어 활성화",
+                                  "지도 데이터의 곡률 정보를 사용하여 속도 제한을 정의하여 앞으로 나아가기",
                                   "../assets/offroad/icon_openpilot.png",
                                   this));
 
@@ -490,14 +489,14 @@ QWidget * community_panel() {
                                   "../assets/offroad/icon_addon.png"));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("AR",
-                                            "Enable Auto Record",
-                                            "Starts recording on car start and stops on car off.",
+                                            "자동 녹화 시작",
+                                            "자동차 출발 시 녹화를 시작하고 자동차 출발 시 중지합니다.",
                                             "../assets/offroad/icon_road.png"
                                               ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("CleanUI",
-                                            "Enables Cleaner UI",
-                                            "Removes most of the clutter.",
+                                            "주행화면을 간략하게",
+                                            "대부분의 정보를 제거합니다.",
                                             "../assets/offroad/icon_road.png"
                                               ));
 
@@ -510,20 +509,20 @@ QWidget * community_panel() {
 
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("DisableUpdates",
-                                            "Disable Auto Updates",
-                                            "This Disables Auto Updates.",
+                                            "자동 업데이트 정지",
+                                            "자동업데이트를 하지 않습니다.",
                                             "../assets/offroad/icon_road.png"
                                               ));
 
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("UseClusterSpeed",
-                                            "Use Cluster Speed",
-                                            "Use cluster speed instead of wheel speed.",
+                                            "계기반 속도 사용",
+                                            "휠 속도 대신에 계기반 속도 사용",
                                             "../assets/offroad/icon_road.png"
                                               ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("UseLQR",
-                                            "Enable LQR Lateral Control",
+                                            "LQR 제어 활성화",
                                             "For Linear Quadratic Ratio Control: Warning please run nTune after 15-20 miles of driving.",
                                             "../assets/offroad/icon_road.png"
                                               ));
@@ -561,28 +560,28 @@ QWidget * community_panel() {
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("IsLdwsCar",
                                             "LDWS",
-                                            "If your car only supports LDWS, turn it on.",
+                                            "LDWS 옵션인 경우 사용",
                                             "../assets/offroad/icon_openpilot.png"
                                               ));
 
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("LaneChangeEnabled",
-                                            "Enable Lane Change Assist",
-                                            "Perform assisted lane changes with openpilot by checking your surroundings for safety, activating the turn signal and gently nudging the steering wheel towards your desired lane. openpilot is not capable of checking if a lane change is safe. You must continuously observe your surroundings to use this feature.",
+                                            "차선 변경 사용",
+                                            "주변의 안전을 확인하고, 방향 지시등을 활성화하고, 원하는 차선을 향해 스티어링 휠을 부드럽게 밀어서 오픈 파일럿으로 보조 차선 변경을 수행하십시오. openpilot은 차선 변경이 안전한지 확인할 수 없습니다. 이 기능을 사용하려면 주변을 지속적으로 관찰해야합니다.",
                                             "../assets/offroad/icon_road.png"
                                               ));
 
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("AutoLaneChangeEnabled",
-                                            "Enable Auto Lane Change(Nudgeless)",
-                                            "warnings: DO NOT TRUST BMS FOR ACCURATE BMS INFORMATION!!!",
+                                            "자동 차선변경 사용-(핸들조작없이 차선변경)",
+                                            "경고 : 베타이기 때문에 조심히 사용하세요!!",
                                             "../assets/offroad/icon_road.png"
                                               ));
 
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("SccSmootherSyncGasPressed",
-                                            "Sync set speed on gas pressed",
-                                            "Syncs the set speed with the cluster when gas is pressed.",
+                                            "크루즈 속도의 동기화",
+                                            "크루즈 속도를 설정 후 엑셀로 인해 설정 속도보다 가속 속도가 높아지면 그 속도에 크루즈 설정 속도가 동기화 됩니다.",
                                             "../assets/offroad/icon_road.png"
                                             ));
   toggles_list->addWidget(horizontal_line());
@@ -593,15 +592,15 @@ QWidget * community_panel() {
                                             ));
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("ShowDebugUI",
-                                            "Show Debug UI",
-                                            "Shows Longitudinal Debug stats when `Clean UI` option is off.",
+                                            "디버그 내용 보기",
+                                            "가감속 등 디버그 내용을 화면에 띄웁니다.",
                                             "../assets/offroad/icon_shell.png"
                                             ));
 
   toggles_list->addWidget(horizontal_line());
   toggles_list->addWidget(new ParamControl("CustomLeadMark",
-                                            "Use custom lead mark for HKG Long",
-                                            "A animated bulls eye lead marker.",
+                                            "선행차 사용자 정의 마크 사용",
+                                            "",
                                             "../assets/offroad/icon_road.png"
                                             ));
 
@@ -670,11 +669,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
   QObject::connect(device, &DevicePanel::showDriverView, this, &SettingsWindow::showDriverView);
 
   QList<QPair<QString, QWidget *>> panels = {
-    {"Device", device},
-    {"Network", network_panel(this)},
-    {"Toggles", new TogglesPanel(this)},
-    {"Software", new SoftwarePanel(this)},
-    {"Community", community_panel()},
+    {"장치", device},
+    {"네트워크", network_panel(this)},
+    {"토글메뉴", new TogglesPanel(this)},
+    {"소프트웨어", new SoftwarePanel(this)},
+    {"커뮤니티", community_panel()},
   };
 
 #ifdef ENABLE_MAPS
