@@ -64,7 +64,7 @@ class SccSmoother:
   def kph_to_clu(self, kph):
     return int(kph * CV.KPH_TO_MS * self.speed_conv_to_clu)
 
-  def __init__(self, accel_gain, decel_gain):
+  def __init__(self, accel_gain, decel_gain, curvature_gain):
 
 
     self.state = int(Params().get('SccSmootherState'))
