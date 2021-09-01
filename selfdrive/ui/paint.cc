@@ -922,7 +922,7 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   }
   else
   {
-    if(!longControl && scc_smoother.getState() == 0)
+    if(!longControl)
         ui_draw_text(s, text_x, 148, "STOCK", 25 * 2.5, COLOR_WHITE, "sans-semibold");
     else
     {
