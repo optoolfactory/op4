@@ -139,8 +139,6 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     
     # scc smoother
     sccSmootherStatus @110;
-    slowingDownSpeed @111;
-    slowingDownSpeedSound @112;
   }
 }
 
