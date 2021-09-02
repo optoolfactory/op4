@@ -77,6 +77,7 @@ class SccSmoother:
     
     self.accel_gain = accel_gain
     self.decel_gain = decel_gain
+    self.curvature_gain = curvature_gain
 
     self.speed_conv_to_ms = CV.KPH_TO_MS if self.is_metric else CV.MPH_TO_MS
     self.speed_conv_to_clu = CV.MS_TO_KPH if self.is_metric else CV.MS_TO_MPH
@@ -109,6 +110,7 @@ class SccSmoother:
     self.curve_speed_ms = 0.
     self.stock_weight = 0.
 
+    self.fused_decel = []
   
   def reset(self):
 
@@ -364,7 +366,7 @@ class SccSmoother:
     return clip(accel, -LIMIT_DECEL, LIMIT_ACCEL), override_acc
   def get_long_lead_speed(self, CS, clu11_speed, sm):
 
-    if self.longcontrol:
+    if self.longcontrol and self.scc_smoother_enabled:
       lead = self.get_lead(sm)
       if lead is not None:
         d = lead.dRel - 5.
