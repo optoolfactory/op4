@@ -69,6 +69,7 @@ class SccSmoother:
 
     self.state = int(Params().get('SccSmootherState'))
     self.scc_smoother_enabled = Params().get_bool('SccSmootherEnabled')
+    self.switch_only_with_gap = Params().get_bool('SccSmootherSwitchGapOnly')
     
     self.longcontrol = Params().get_bool('LongControlEnabled')
     self.slow_on_curves = Params().get_bool('SccSmootherSlowOnCurves')
