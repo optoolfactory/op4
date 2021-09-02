@@ -241,6 +241,7 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"ShowDebugUI", PERSISTENT},
     {"CustomLeadMark", PERSISTENT},
     {"SccSmootherEnabled", PERSISTENT},
+    {"SccSmootherSwitchGapOnly", PERSISTENT},
 };
 
 } // namespace
