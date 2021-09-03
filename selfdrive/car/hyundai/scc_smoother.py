@@ -411,7 +411,7 @@ class SccSmoother:
       else:
         self.curve_speed_ms = 255.
 
-  def cal_target_speed(self, CS, clu11_speed, controls):
+  def cal_target_speed(self, accel, CC, CS, clu11_speed, controls):
 
     if not self.longcontrol:
       if CS.gas_pressed and self.sync_set_speed_while_gas_pressed and CS.cruise_buttons == Buttons.NONE:
