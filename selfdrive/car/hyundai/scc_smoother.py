@@ -316,7 +316,7 @@ class SccSmoother:
       if self.longcontrol:
         self.target_speed = 0.
 
-  def get_button(self, current_set_speed):
+  def get_button(self, clu11_speed, current_set_speed):
 
     if self.target_speed < self.min_set_speed_clu:
       return Buttons.NONE
