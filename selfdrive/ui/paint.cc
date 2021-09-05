@@ -1,3 +1,5 @@
+
+
 #include "selfdrive/ui/paint.h"
 
 #include <algorithm>
@@ -888,6 +890,8 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   // scc smoother
   cereal::CarControl::SccSmoother::Reader scc_smoother = s->scene.car_control.getSccSmoother();
   bool longControl = scc_smoother.getLongControl();
+  float cruiseVirtualMaxSpeed = scc_smoother.getCruiseVirtualMaxSpeed();
+  float cruiseRealMaxSpeed = scc_smoother.getCruiseRealMaxSpeed();
 
   // kph
   float applyMaxSpeed = scc_smoother.getApplyMaxSpeed();
