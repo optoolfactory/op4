@@ -266,9 +266,9 @@ class SccSmoother:
 
       if self.state == CruiseState.STOCK or not ascc_enabled or CS.standstill or CS.cruise_buttons != Buttons.NONE:
 
-        #CC.sccSmoother.logMessage = '{:.2f},{:d},{:d},{:d},{:d},{:.1f},{:d},{:d},{:d}' \
-        #  .format(float(apply_accel*CV.MS_TO_KPH), int(CS.acc_mode), int(enabled), int(CS.cruiseState_enabled), int(CS.standstill), float(CS.cruiseState_speed),
-        #          int(CS.cruise_buttons), int(CS.brake_pressed), int(CS.gas_pressed))
+        CC.sccSmoother.logMessage = '{:.2f},{:d},{:d},{:d},{:d},{:.1f},{:d},{:d},{:d}' \
+          .format(float(apply_accel*CV.MS_TO_KPH), int(CS.acc_mode), int(enabled), int(CS.cruiseState_enabled), int(CS.standstill), float(CS.cruiseState_speed),
+                  int(CS.cruise_buttons), int(CS.brake_pressed), int(CS.gas_pressed))
 
         CC.sccSmoother.logMessage = max_speed_log
         self.reset()
