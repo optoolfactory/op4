@@ -286,6 +286,8 @@ class SccSmoother:
 
     self.cal_target_speed(accel, CC, CS, clu11_speed, controls)
 
+    CC.sccSmoother.logMessage = '{:.1f}/{:.1f}, {:d}/{:d}/{:d}, {:d}' \
+      .format(float(override_acc), float(accel), int(self.target_speed), int(self.curve_speed), int(road_limit_speed), int(self.btn))
     CC.sccSmoother.logMessage = max_speed_log
 
     if self.wait_timer > 0:
