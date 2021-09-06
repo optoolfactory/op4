@@ -124,7 +124,7 @@ DevicePanel::DevicePanel(QWidget* parent) : QWidget(parent) {
   main_layout->addLayout(reset_layout);
 
   // reset calibration button
-  QPushButton *reset_calib_btn = new QPushButton("Reset Calibration");
+  QPushButton *reset_calib_btn = new QPushButton("캘리브레이션, 라이브파라미터 초기화");
   reset_calib_btn->setStyleSheet("height: 120px;border-radius: 15px;background-color: #393939;");
   reset_layout->addWidget(reset_calib_btn);
   QObject::connect(reset_calib_btn, &QPushButton::released, [=]() {
@@ -398,11 +398,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
   QObject::connect(device, &DevicePanel::closeSettings, this, &SettingsWindow::closeSettings);
 
   QList<QPair<QString, QWidget *>> panels = {
-    {"Device", device},
-    {"Network", network_panel(this)},
-    {"Toggles", new TogglesPanel(this)},
-    {"Software", new SoftwarePanel(this)},
-    {"Community", new CommunityPanel(this)},
+    {"장치", device},
+    {"네트워크", network_panel(this)},
+    {"토글메뉴", new TogglesPanel(this)},
+    {"소프트웨어", new SoftwarePanel(this)},
+    {"커뮤니티", new CommunityPanel(this)},
   };
 
 #ifdef ENABLE_MAPS
