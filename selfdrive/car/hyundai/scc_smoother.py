@@ -417,7 +417,7 @@ class SccSmoother:
           self.curve_speed_ms = 255.
       else:
         self.curve_speed_ms = 255.
-
+"""
   def cal_target_speed(self, accel, CC, CS, clu11_speed, controls):
 
     if not self.longcontrol:
@@ -436,7 +436,28 @@ class SccSmoother:
         if clu11_speed + SYNC_MARGIN > self.kph_to_clu(controls.v_cruise_kph):
           set_speed = clip(clu11_speed + SYNC_MARGIN, self.min_set_speed_clu, self.max_set_speed_clu)
           self.target_speed = set_speed
+"""
+  def cal_target_speed(self, accel, CC, CS, clu11_speed, controls):
 
+    if not self.longcontrol:
+      if CS.gas_pressed:
+        self.target_speed = clu11_speed
+        if clu11_speed > controls.v_cruise_kph and self.sync_set_speed_while_gas_pressed:
+          set_speed = clip(clu11_speed, self.min_set_speed_clu, self.max_set_speed_clu)
+          controls.v_cruise_kph = set_speed
+      else:
+        self.target_speed = clu11_speed + accel
+        #self.target_speed = controls.v_cruise_kph
+
+      if self.max_speed > self.min_set_speed_clu:
+        self.target_speed = clip(self.target_speed, self.min_set_speed_clu, self.max_speed_clu)
+
+    else:
+      if CS.gas_pressed and CS.cruiseState_enabled:
+        if clu11_speed + 2. > controls.v_cruise_kph and self.sync_set_speed_while_gas_pressed:
+          set_speed = clip(clu11_speed + 2., self.min_set_speed_clu, self.max_set_speed_clu)
+          self.target_speed = set_speed
+          
   def update_max_speed(self, max_speed):
 
     if not self.longcontrol or self.max_speed_clu <= 0:
