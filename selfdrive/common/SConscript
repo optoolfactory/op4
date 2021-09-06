@@ -31,7 +31,7 @@ if arch == "aarch64":
 elif arch == "larch64":
   files += [
     'touch.c',
-  ] 
+  ]
   _gpu_libs = ["GLESv2"]
 else:
   _gpu_libs = ["GL"]
