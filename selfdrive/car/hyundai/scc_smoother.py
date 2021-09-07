@@ -449,7 +449,7 @@ class SccSmoother:
         self.target_speed = clu11_speed + accel
         #self.target_speed = controls.v_cruise_kph
 
-      if self.max_speed > self.min_set_speed_clu:
+      if self.max_speed_clu > self.min_set_speed_clu:
         self.target_speed = clip(self.target_speed, self.min_set_speed_clu, self.max_speed_clu)
 
     else:
