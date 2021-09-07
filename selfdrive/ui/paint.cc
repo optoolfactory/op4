@@ -931,9 +931,9 @@ static void ui_draw_vision_maxspeed(UIState *s) {
     else
     {
         if(longControl)
-            ui_draw_text(s, text_x, 148, "OP", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+            ui_draw_text(s, text_x, 100, "OP", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
         else
-            ui_draw_text(s, text_x, 148, "SCC", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+            ui_draw_text(s, text_x, 100, "SCC", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
     }
 
     ui_draw_text(s, text_x, 242, "N/A", 42 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
