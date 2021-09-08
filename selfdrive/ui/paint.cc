@@ -927,7 +927,7 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   else
   {
     if(!longControl && scc_smoother.getState() == 0)
-	    ui_draw_text(s, text_x, 148, "STOCK", 25 * 2.5, COLOR_WHITE, "sans-semibold");
+	    ui_draw_text(s, text_x, 100, "STOCK", 25 * 2.5, COLOR_WHITE, "sans-semibold");
     else
     {
         if(longControl)
@@ -936,7 +936,7 @@ static void ui_draw_vision_maxspeed(UIState *s) {
             ui_draw_text(s, text_x, 100, "SCC", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
     }
 
-    ui_draw_text(s, text_x, 242, "N/A", 42 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    ui_draw_text(s, text_x, 195, "N/A", 42 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
   }
 
 }
