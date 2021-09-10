@@ -899,6 +899,11 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
   EventName.autoLaneChange: {
     ET.WARNING: auto_lane_change_alert,
   },
+  
+  EventName.sccSmootherStatus: {
+    ET.PERMANENT: Alert("","", AlertStatus.normal, AlertSize.none,
+      Priority.HIGH, VisualAlert.none, AudibleAlert.chimeWarning1, .4, .1, .1),
+  },
 
   EventName.slowingDownSpeed: {
     ET.PERMANENT: Alert("속도를 조절합니다.","", AlertStatus.normal, AlertSize.small,
