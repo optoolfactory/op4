@@ -156,6 +156,7 @@ class SccSmoother:
     return changed
   
   def inject_events(self, events):
+    if self.state_changed_alert:
       self.state_changed_alert = False
       events.add(EventName.sccSmootherStatus)
 
