@@ -53,6 +53,10 @@ def manager_init():
     ("StockNaviDecelEnabled", "0"),
     ("ShowDebugUI", "0"),
     ("CustomLeadMark", "0")
+    
+    ("SccSmootherState", "0"),
+    ("SccSmootherEnabled", "0"),
+    ("SccSmootherSwitchGapOnly", "0"),    
   ]
   if not PC:
     default_params.append(("LastUpdateTime", datetime.datetime.utcnow().isoformat().encode('utf8')))
