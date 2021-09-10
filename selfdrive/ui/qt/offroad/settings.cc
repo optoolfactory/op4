@@ -602,18 +602,16 @@ CommunityPanel::CommunityPanel(QWidget* parent) : QWidget(parent) {
                                             "../assets/offroad/icon_road.png",
                                             this));
   
-    toggles_list->addWidget(horizontal_line());
-  toggles_list->addWidget(new ParamControl("SccSmootherEnabled",
+  toggles.append(new ParamControl("SccSmootherEnabled",
                                             "가감속 스무서 사용",
                                             "N Smoother. 순정 ASCC 기능을 이용하여 가속과 감속을 부드럽게 할 수 있도록 도와 줍니다. 사용법을 정확히 인지하고 사용하십시오.",
                                             "../assets/offroad/icon_road.png"
                                             ));
-  toggles_list->addWidget(new ParamControl("SccSmootherSwitchGapOnly",
+  toggles.append(new ParamControl("SccSmootherSwitchGapOnly",
                                             "스무스 설정 버튼 변경",
                                             "크루즈 갭 설정 버튼으로 순정 ASCC와 가감속 스무서 설정을 변경합니다.",
                                             "../assets/offroad/icon_road.png"
                                             ));
-  toggles_list->addWidget(horizontal_line());
 
   for(ParamControl *toggle : toggles) {
     if(main_layout->count() != 0) {
