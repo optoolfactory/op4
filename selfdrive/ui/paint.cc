@@ -332,7 +332,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
        snprintf(val_str, sizeof(val_str), "-");
     }
     snprintf(uom_str, sizeof(uom_str), "m   ");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "REL DIST",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "차간 거리",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -371,7 +371,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
     } else {
       snprintf(uom_str, sizeof(uom_str), "mph");
     }
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "REL SPEED",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "상대 속도",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -399,7 +399,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
       snprintf(val_str, sizeof(val_str), "%.1f°", angleSteers);
 
       snprintf(uom_str, sizeof(uom_str), "");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "REAL STEER",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "현재 조향각",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -432,7 +432,7 @@ static void bb_ui_draw_measures_left(UIState *s, int bb_x, int bb_y, int bb_w ) 
        snprintf(val_str, sizeof(val_str), "-");
     }
       snprintf(uom_str, sizeof(uom_str), "");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "DESIR STEER",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "목표 조향각",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -489,7 +489,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
       // temp is alway in C * 10
       snprintf(val_str, sizeof(val_str), "%.1f°", cpuTemp);
       snprintf(uom_str, sizeof(uom_str), "");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "CPU TEMP",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "CPU 온도",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -513,7 +513,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
     }
     snprintf(val_str, sizeof(val_str), "%.1f°", ambientTemp);
     snprintf(uom_str, sizeof(uom_str), "");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "AMBIENT",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "전체온도",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -531,7 +531,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
 
     snprintf(val_str, sizeof(val_str), "%d%%", batteryPercent);
     snprintf(uom_str, sizeof(uom_str), "");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "BAT LVL",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "배터리 충전량",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -546,7 +546,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
 
     snprintf(val_str, sizeof(val_str), "%.1f", s->scene.gps_ext.getAltitude());
     snprintf(uom_str, sizeof(uom_str), "m");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "ALTITUDE",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "고도",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -581,7 +581,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
 
     snprintf(val_str, sizeof(val_str), "%.2f", gpsAccuracy);
     snprintf(uom_str, sizeof(uom_str), "m");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "GPS PREC",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "GPS 정확도",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -599,7 +599,7 @@ static void bb_ui_draw_measures_right(UIState *s, int bb_x, int bb_y, int bb_w )
 
     snprintf(val_str, sizeof(val_str), "%d", s->scene.satelliteCount > 0 ? s->scene.satelliteCount : 0);
     snprintf(uom_str, sizeof(uom_str), "");
-    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "SATELLITE",
+    bb_h +=bb_ui_draw_measure(s,  val_str, uom_str, "위성",
         bb_rx, bb_ry, bb_uom_dx,
         val_color, lab_color, uom_color,
         value_fontSize, label_fontSize, uom_fontSize );
@@ -780,7 +780,7 @@ static void ui_draw_vision_scc_gap(UIState *s) {
   int autoTrGap = scc_smoother.getAutoTrGap();
 
   const int radius = 96;
-  const int center_x = radius + (bdr_s * 2);
+  const int center_x = radius + (bdr_s * 2) + (radius*2 + 50) * 1;
   const int center_y = s->fb_h - footer_h / 2;
 
   NVGcolor color_bg = nvgRGBA(0, 0, 0, (255 * 0.1f));
@@ -818,7 +818,7 @@ static void ui_draw_vision_brake(UIState *s) {
   const UIScene *scene = &s->scene;
 
   const int radius = 96;
-  const int center_x = radius + (bdr_s * 2) + radius*2 + 60;
+  const int center_x = radius + (bdr_s * 2) + (radius*2 + 50) * 2;
   const int center_y = s->fb_h - footer_h / 2;
 
   auto car_state = (*s->sm)["carState"].getCarState();
@@ -837,7 +837,7 @@ static void ui_draw_vision_autohold(UIState *s) {
     return;
 
   const int radius = 96;
-  const int center_x = radius + (bdr_s * 2) + (radius*2 + 60) * 2;
+  const int center_x = radius + (bdr_s * 2) + (radius*2 + 50) * 3;
   const int center_y = s->fb_h - footer_h / 2;
 
   float brake_img_alpha = autohold > 0 ? 1.0f : 0.15f;
@@ -854,7 +854,9 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   // scc smoother
   cereal::CarControl::SccSmoother::Reader scc_smoother = s->scene.car_control.getSccSmoother();
   bool longControl = scc_smoother.getLongControl();
-
+  float cruiseVirtualMaxSpeed = scc_smoother.getCruiseVirtualMaxSpeed();
+  float cruiseRealMaxSpeed = scc_smoother.getCruiseRealMaxSpeed();
+	
   // kph
   float applyMaxSpeed = scc_smoother.getApplyMaxSpeed();
   float cruiseMaxSpeed = scc_smoother.getCruiseMaxSpeed();
@@ -888,10 +890,15 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   }
   else
   {
-    if(longControl)
-        ui_draw_text(s, text_x, 100, "OP", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    if(!longControl && scc_smoother.getState() == 0)
+	    ui_draw_text(s, text_x, 100, "STOCK", 25 * 2.5, COLOR_WHITE, "sans-semibold");
     else
-        ui_draw_text(s, text_x, 100, "MAX", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    {
+        if(longControl)
+            ui_draw_text(s, text_x, 100, "OP", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+        else
+            ui_draw_text(s, text_x, 100, "SCC", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    }
 
     ui_draw_text(s, text_x, 195, "N/A", 42 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
   }
@@ -1020,6 +1027,8 @@ void ui_nvg_init(UIState *s) {
 
 	{"custom_lead_vision", "../assets/images/custom_lead_vision.png"},
 	{"custom_lead_radar", "../assets/images/custom_lead_radar.png"},
+
+	{"tire_pressure", "../assets/images/img_tire_pressure.png"},
   };
   for (auto [name, file] : images) {
     s->images[name] = nvgCreateImage(s->vg, file, 1);
