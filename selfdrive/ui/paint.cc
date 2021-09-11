@@ -854,7 +854,9 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   // scc smoother
   cereal::CarControl::SccSmoother::Reader scc_smoother = s->scene.car_control.getSccSmoother();
   bool longControl = scc_smoother.getLongControl();
-
+  float cruiseVirtualMaxSpeed = scc_smoother.getCruiseVirtualMaxSpeed();
+  float cruiseRealMaxSpeed = scc_smoother.getCruiseRealMaxSpeed();
+	
   // kph
   float applyMaxSpeed = scc_smoother.getApplyMaxSpeed();
   float cruiseMaxSpeed = scc_smoother.getCruiseMaxSpeed();
@@ -888,10 +890,15 @@ static void ui_draw_vision_maxspeed(UIState *s) {
   }
   else
   {
-    if(longControl)
-        ui_draw_text(s, text_x, 100, "OP", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    if(!longControl && scc_smoother.getState() == 0)
+	    ui_draw_text(s, text_x, 100, "STOCK", 25 * 2.5, COLOR_WHITE, "sans-semibold");
     else
-        ui_draw_text(s, text_x, 100, "MAX", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    {
+        if(longControl)
+            ui_draw_text(s, text_x, 100, "OP", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+        else
+            ui_draw_text(s, text_x, 100, "SCC", 25 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
+    }
 
     ui_draw_text(s, text_x, 195, "N/A", 42 * 2.5, COLOR_WHITE_ALPHA(100), "sans-semibold");
   }
