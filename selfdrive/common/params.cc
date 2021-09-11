@@ -223,6 +223,9 @@ std::unordered_map<std::string, uint32_t> keys = {
     {"CustomLeadMark", PERSISTENT},
 
     {"SoftRestartTriggered", CLEAR_ON_MANAGER_START},
+  
+    {"SccSmootherEnabled", PERSISTENT},
+    {"SccSmootherSwitchGapOnly", PERSISTENT}  
 };
 
 } // namespace
