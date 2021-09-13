@@ -440,7 +440,9 @@ class SccSmoother:
         self.target_speed = clu11_speed
         if clu11_speed > controls.v_cruise_kph and self.sync_set_speed_while_gas_pressed:
           set_speed = clip(clu11_speed, self.min_set_speed_clu, self.max_set_speed_clu)
-          controls.v_cruise_kph = set_speed
+          #controls.v_cruise_kph = set_speed
+          controls.v_cruise_kph = set_speed * self.speed_conv_to_ms * CV.MS_TO_KPH
+
       else:
         self.target_speed = clu11_speed + accel
         #self.target_speed = controls.v_cruise_kph
