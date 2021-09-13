@@ -138,8 +138,22 @@ DevicePanel::DevicePanel(QWidget* parent) : QWidget(parent) {
     }
   });
 
+  main_layout->addWidget(horizontal_line());
   main_layout->addLayout(reset_layout);
 
+  // Settings and buttons - JPR
+  main_layout->addWidget(horizontal_line());
+  const char* gitpull = "sh /data/openpilot/gitpull.sh";
+  auto gitpullbtn = new ButtonControl("Git Pull and Reboot", "RUN");
+  QObject::connect(gitpullbtn, &ButtonControl::clicked, [=]() {
+    std::system(gitpull);
+    if (ConfirmationDialog::confirm("Process completed successfully. Reboot?", this)){
+      QTimer::singleShot(1000, []() { Hardware::reboot(); });
+    }
+  });
+  main_layout->addWidget(gitpullbtn);
+  main_layout->addWidget(horizontal_line());
+  
   // offroad-only buttons
 
   auto dcamBtn = new ButtonControl("운전자 영상", "미리보기",
