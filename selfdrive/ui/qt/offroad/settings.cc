@@ -143,10 +143,10 @@ DevicePanel::DevicePanel(QWidget* parent) : QWidget(parent) {
 
   // Settings and buttons - JPR
   const char* gitpull = "sh /data/openpilot/gitpull.sh";
-  auto gitpullbtn = new ButtonControl("Git Pull and Reboot", "RUN");
+  auto gitpullbtn = new ButtonControl("소프트웨어 업데이트와 재부팅", "실행");
   QObject::connect(gitpullbtn, &ButtonControl::clicked, [=]() {
     std::system(gitpull);
-    if (ConfirmationDialog::confirm("Process completed successfully. Reboot?", this)){
+    if (ConfirmationDialog::confirm("업데이트가 완료 되었습니다. 재부팅 할까요?", this)){
       QTimer::singleShot(1000, []() { Hardware::reboot(); });
     }
   });
