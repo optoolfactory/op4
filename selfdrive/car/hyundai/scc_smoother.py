@@ -462,7 +462,7 @@ class SccSmoother:
       self.max_speed_clu = max_speed_clu
     else:
       kp = 0.01
-      error = max_speed - self.max_speed_clu
+      error = max_speed_clu - self.max_speed_clu
       self.max_speed_clu = self.max_speed_clu + error * kp
 
   def get_accel(self, CS, sm, accel):
