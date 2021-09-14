@@ -459,7 +459,7 @@ class SccSmoother:
   def update_max_speed(self, max_speed):
 
     if not self.longcontrol or self.max_speed_clu <= 0:
-      self.max_speed_clu = max_speed
+      self.max_speed_clu = max_speed_clu
     else:
       kp = 0.01
       error = max_speed - self.max_speed_clu
