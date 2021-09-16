@@ -349,7 +349,7 @@ def road_speed_limiter_get_max_speed(cluster_speed, v_cruise_kph):
   if road_speed_limiter is None:
     road_speed_limiter = RoadSpeedLimiter()
 
-  return road_speed_limiter.get_max_speed(CS, v_cruise_kph)
+  return road_speed_limiter.get_max_speed(cluster_speed, v_cruise_kph)
 
 
 if __name__ == "__main__":
