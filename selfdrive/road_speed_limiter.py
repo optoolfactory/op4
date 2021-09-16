@@ -344,7 +344,7 @@ def road_speed_limiter_get_active():
   return road_speed_limiter.get_active()
 
 
-def road_speed_limiter_get_max_speed(CS, v_cruise_kph):
+def road_speed_limiter_get_max_speed(cluster_speed, v_cruise_kph):
   global road_speed_limiter
   if road_speed_limiter is None:
     road_speed_limiter = RoadSpeedLimiter()
