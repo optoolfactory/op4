@@ -170,7 +170,7 @@ class SccSmoother:
 
     # kph
     apply_limit_speed, road_limit_speed, left_dist, first_started, max_speed_log = \
-      road_speed_limiter_get_max_speed(clu11_speed, controls.v_cruise_kph)
+      road_speed_limiter_get_max_speed(CS, controls.v_cruise_kph)
                                        
     self.cal_curve_speed(sm, CS.out.vEgo, frame)
     if self.slow_on_curves and self.curve_speed_ms >= MIN_CURVE_SPEED:
