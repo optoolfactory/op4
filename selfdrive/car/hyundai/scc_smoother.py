@@ -13,7 +13,7 @@ from selfdrive.controls.lib.lead_mpc import AUTO_TR_CRUISE_GAP
 from selfdrive.ntune import ntune_scc_get
 from selfdrive.road_speed_limiter import road_speed_limiter_get_max_speed, road_speed_limiter_get_active
 
-SYNC_MARGIN = 3.
+SYNC_MARGIN = 9.
 
 # do not modify
 MIN_SET_SPEED_KPH = V_CRUISE_MIN
