@@ -13,7 +13,7 @@ from selfdrive.controls.lib.lead_mpc import AUTO_TR_CRUISE_GAP
 from selfdrive.ntune import ntune_scc_get
 from selfdrive.road_speed_limiter import road_speed_limiter_get_max_speed, road_speed_limiter_get_active
 
-SYNC_MARGIN = 9.
+SYNC_MARGIN = 3.
 
 # do not modify
 MIN_SET_SPEED_KPH = V_CRUISE_MIN
@@ -215,7 +215,7 @@ class SccSmoother:
         max_speed_clu = min(max_speed_clu, lead_speed)
 
         if not self.limited_lead:
-          self.max_speed_clu = clu11_speed + 9.
+          self.max_speed_clu = clu11_speed + 3.
           self.limited_lead = True
     else:
       self.limited_lead = False
