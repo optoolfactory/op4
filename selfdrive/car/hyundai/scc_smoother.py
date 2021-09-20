@@ -359,7 +359,7 @@ class SccSmoother:
           accel = op_accel * 3.8
         else:
           accel = op_accel * interp(clu11_speed, [0., 30., 38., 50., 51., 60., 100.],
-                                    [2.3, 3.4, 3.2, 3.0, 2.8, 2.5, 1.0])
+                                    [2.3, 3.4, 3.2, 1.7, 1.65, 1.4, 1.0])
 
     if accel > 0.:
       accel *= self.accel_gain * interp(clu11_speed, [35., 60., 100.], [1.5, 1.25, 1.2])
@@ -439,7 +439,7 @@ class SccSmoother:
       if CS.gas_pressed:
         self.target_speed = clu11_speed
         if clu11_speed + SYNC_MARGIN > controls.v_cruise_kph and self.sync_set_speed_while_gas_pressed:
-          set_speed = clip(clu11_speed + SYNC_MARGIN, MIN_SET_SPEED_KPH, MAX_SET_SPEED_KPH)
+          set_speed = clip(clu11_speed, self.min_set_speed_clu, self.max_set_speed_clu)
           #controls.v_cruise_kph = set_speed
           controls.v_cruise_kph = set_speed * self.speed_conv_to_ms * CV.MS_TO_KPH
 
@@ -448,12 +448,12 @@ class SccSmoother:
         #self.target_speed = controls.v_cruise_kph
 
       if self.max_speed_clu > self.min_set_speed_clu:
-        self.target_speed = clip(self.target_speed, MIN_SET_SPEED_KPH, MAX_SET_SPEED_KPH)
+        self.target_speed = clip(self.target_speed, self.min_set_speed_clu, self.max_speed_clu)
 
     else:
       if CS.gas_pressed and CS.cruiseState_enabled:
         if clu11_speed + SYNC_MARGIN > controls.v_cruise_kph and self.sync_set_speed_while_gas_pressed:
-          set_speed = clip(clu11_speed + SYNC_MARGIN, MIN_SET_SPEED_KPH, MAX_SET_SPEED_KPH)
+          set_speed = clip(clu11_speed + SYNC_MARGIN, self.min_set_speed_clu, self.max_set_speed_clu)
           self.target_speed = set_speed
           
   def update_max_speed(self, max_speed):
