@@ -169,10 +169,13 @@ class nTune():
     if self.checkValue("sccBrakeFactor", 0.5, 1.5, 1.0):
       updated = True
 
-    if self.checkValue("sccCurvatureFactor", 0.5, 1.5, 1.0):
+    if self.checkValue("sccCurvatureFactor", 0.5, 1.5, 0.95):
       updated = True
 
-    if self.checkValue("longitudinalActuatorDelay", 0.1, 1.5, 0.15):
+    if self.checkValue("longitudinalActuatorDelayLowerBound", 0.1, 1.5, 0.15):
+      updated = True
+
+    if self.checkValue("longitudinalActuatorDelayUpperBound", 0.1, 1.5, 0.15):
       updated = True
 
     return updated
