@@ -204,7 +204,7 @@ def calibration_incomplete_alert(CP: car.CarParams, sm: messaging.SubMaster, met
 
 
 def no_gps_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: bool) -> Alert:
-  gps_integrated = sm['pandaState'].pandaType in [log.PandaState.PandaType.uno, log.PandaState.PandaType.dos]
+  gps_integrated = sm['peripheralState'].pandaType in [log.PandaState.PandaType.uno, log.PandaState.PandaType.dos]
   return Alert(
     "GPS 수신불량",
     "GPS 연결상태 및 안테나를 점검하세요" if gps_integrated else "Check GPS antenna placement",
@@ -219,22 +219,6 @@ def wrong_car_mode_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: boo
   return NoEntryAlert(text, duration_hud_alert=0.)
 
 
-def startup_fuzzy_fingerprint_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: bool) -> Alert:
-  return Alert(
-    "경고 : 자동차 모델과 정확하게 일치 하지 않습니다.",
-    f"Closest Match: {CP.carFingerprint.title()[:40]}",
-    AlertStatus.userPrompt, AlertSize.mid,
-    Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., 10.)
-
-def auto_lane_change_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: bool) -> Alert:
-  alc_timer = sm['lateralPlan'].autoLaneChangeTimer
-  return Alert(
-    "자동차선변경이 %d초 뒤에 시작됩니다" % alc_timer,
-    "변경할 차선의 차량들을 확인하세요",
-    AlertStatus.normal, AlertSize.mid,
-    Priority.LOWER, VisualAlert.steerRequired, AudibleAlert.none, 0., .1, .1, alert_rate=0.75)
-
-
 def joystick_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: bool) -> Alert:
   axes = sm['testJoystick'].axes
   gb, steer = list(axes)[:2] if len(axes) else (0., 0.)
@@ -243,6 +227,14 @@ def joystick_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: bool) -> 
     f"Gas: {round(gb * 100.)}%, Steer: {round(steer * 100.)}%",
     AlertStatus.normal, AlertSize.mid,
     Priority.LOW, VisualAlert.none, AudibleAlert.none, 0., 0., .1)
+
+def auto_lane_change_alert(CP: car.CarParams, sm: messaging.SubMaster, metric: bool) -> Alert:
+  alc_timer = sm['lateralPlan'].autoLaneChangeTimer
+  return Alert(
+    "자동차선변경이 %d초 뒤에 시작됩니다" % alc_timer,
+    "변경할 차선의 차량들을 확인하세요",
+    AlertStatus.normal, AlertSize.mid,
+    Priority.LOWER, VisualAlert.steerRequired, AudibleAlert.none, 0., .1, .1, alert_rate=0.75)
 
 
 EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, bool], Alert]]]] = {
@@ -299,22 +291,10 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., 10.),
   },
 
-  # openpilot uses the version strings from various ECUs to detect the correct car model.
-  # Usually all ECUs are recognized and an exact match to a car model can be made. Sometimes
-  # one or two ECUs have unrecognized versions, but the others are present in the database.
-  # If openpilot is confident about the match to a car model, it fingerprints anyway.
-  # In this case an alert is thrown since there is a small chance the wrong car was detected
-  # and the user should pay extra attention.
-  # This alert can be prevented by adding all ECU firmware version to openpilot:
-  # https://github.com/commaai/openpilot/wiki/Fingerprinting
-  EventName.startupFuzzyFingerprint: {
-    ET.PERMANENT: startup_fuzzy_fingerprint_alert,
-  },
-
   EventName.startupNoFw: {
     ET.PERMANENT: Alert(
       "자동차를 인식할수 없습니다.",
-      "배션 연결을 확인해보세요",
+      "배선 연결을 확인해보세요",
       AlertStatus.userPrompt, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., 10.),
   },
@@ -402,7 +382,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
   # This alert is thrown when any of these values exceed a sanity check. This can be caused by
   # bad alignment or bad sensor data. If this happens consistently consider creating an issue on GitHub
   EventName.vehicleModelInvalid: {
-    ET.NO_ENTRY: NoEntryAlert("차량 매개변수 식별 오류"),
+    ET.NO_ENTRY: NoEntryAlert("Vehicle Parameter Identification Failed"),
     ET.SOFT_DISABLE: SoftDisableAlert("Vehicle Parameter Identification Failed"),
     ET.WARNING: Alert(
       "차량 매개변수 식별 오류",
@@ -424,7 +404,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
       "도로를 주시하세요 : 운전자 전방주시 불안",
       "",
       AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.none, .0, .1, .1),
+      Priority.LOW, VisualAlert.none, AudibleAlert.none, .0, .1, .1),
   },
 
   EventName.promptDriverDistracted: {
@@ -615,8 +595,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
 
   EventName.sensorDataInvalid: {
     ET.PERMANENT: Alert(
-      "No Data from Device Sensors",
-      "Reboot your Device",
+      "센서 오류 입니다.",
+      "장치를 재부팅 하세요",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, 0., 0., .2, creation_delay=1.),
     ET.NO_ENTRY: NoEntryAlert("장치 센서 오류"),
@@ -737,13 +717,13 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
     ET.SOFT_DISABLE: SoftDisableAlert("메모리 부족 : 장치를 재가동하세요"),
     ET.PERMANENT: NormalPermanentAlert("메모리 부족", "장치를 재가동하세요"),
     ET.NO_ENTRY : NoEntryAlert("메모리 부족 : 장치를 재가동하세요",
-                               audible_alert=AudibleAlert.chimeDisengage),
+                              audible_alert=AudibleAlert.chimeDisengage),
   },
 
   EventName.highCpuUsage: {
-    #ET.SOFT_DISABLE: SoftDisableAlert("시스템 오류 : 장치를 재부팅 하세요"),
-    #ET.PERMANENT: NormalPermanentAlert("시스템 오류", "장치를 재부팅 하세요"),
-    ET.NO_ENTRY: NoEntryAlert("System Malfunction: Reboot Your Device",
+    #ET.SOFT_DISABLE: SoftDisableAlert("System Malfunction: Reboot Your Device"),
+    #ET.PERMANENT: NormalPermanentAlert("System Malfunction", "Reboot your Device"),
+    ET.NO_ENTRY: NoEntryAlert("시스템 오류 : 장치를 재부팅 하세요",
                               audible_alert=AudibleAlert.chimeDisengage),
   },
 
@@ -816,7 +796,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, Callable[[Any, messaging.SubMaster, boo
 
   EventName.reverseGear: {
     ET.PERMANENT: Alert(
-      "기어 [R] 상태",
+      "Reverse\nGear",
       "",
       AlertStatus.normal, AlertSize.full,
       Priority.LOWEST, VisualAlert.none, AudibleAlert.none, 0., 0., .2, creation_delay=0.5),
