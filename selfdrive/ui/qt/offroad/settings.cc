@@ -391,7 +391,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QFrame(parent) {
     {"네트워크", network_panel(this)},
     {"토글메뉴", new TogglesPanel(this)},
     {"소프트웨어", new SoftwarePanel(this)},
-    {"커뮤니티", new community_panel(this)},
+    {"커뮤니티", new CommunityPanel(this)},
   };
 
 #ifdef ENABLE_MAPS
