@@ -333,7 +333,7 @@ class SccSmoother:
 
     return None
   
-    def cal_acc(self, apply_accel, CS, clu11_speed, sm):
+  def cal_acc(self, apply_accel, CS, clu11_speed, sm):
 
     cruise_gap = clip(CS.cruise_gap, 1., 4.)
 
