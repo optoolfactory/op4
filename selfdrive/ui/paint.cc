@@ -878,7 +878,7 @@ static void ui_draw_vision_maxspeed(UIState *s) {
         snprintf(str, sizeof(str), "%d", (int)(cruiseMaxSpeed*0.621371 + 0.5));
 
     ui_draw_text(s, text_x, 195, str, 48 * 2.5, COLOR_WHITE, "sans-bold");
-  } else {
+  } else 
   {
     if(!longControl && scc_smoother.getState() == 0)
 	    ui_draw_text(s, text_x, 100, "STOCK", 25 * 2.5, COLOR_WHITE, "sans-semibold");
