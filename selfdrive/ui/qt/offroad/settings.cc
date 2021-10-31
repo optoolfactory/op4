@@ -535,7 +535,7 @@ CommunityPanel::CommunityPanel(QWidget* parent) : QWidget(parent) {
   toggles.append(new ParamControl("LongControlEnabled",
                                             "롱컨트롤 사용",
                                             "경고 : 오픈파일럿이 속도를 조절합니다. 주의 하시길 바랍니다.",
-                                            "../assets/offroad/icon_road.png"
+                                            "../assets/offroad/icon_road.png",
                                             this));
 
   toggles.append(new ParamControl("MadModeEnabled",
