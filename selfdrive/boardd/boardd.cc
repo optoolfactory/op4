@@ -151,7 +151,7 @@ Panda *usb_connect() {
   // power on charging, only the first time. Panda can also change mode and it causes a brief disconneciton
 #ifndef __x86_64__
   static std::once_flag connected_once;
-  std::call_once(connected_once, &Panda::set_usb_power_mode, panda, cereal::PandaState::UsbPowerMode::CDP);
+  std::call_once(connected_once, &Panda::set_usb_power_mode, panda, cereal::PeripheralState::UsbPowerMode::CDP);
 #endif
 
   if (panda->has_rtc) {
@@ -348,7 +348,7 @@ void send_peripheral_state(PubMaster *pm, Panda *panda) {
   }
 
   uint16_t fan_speed_rpm = panda->get_fan_speed();
-  ps.setUsbPowerMode(cereal::PandaState::UsbPowerMode(pandaState.usb_power_mode));
+  ps.setUsbPowerMode(cereal::PeripheralState::UsbPowerMode(pandaState.usb_power_mode));
   ps.setFanSpeedRpm(fan_speed_rpm);
 
   pm->send("peripheralState", msg);
@@ -408,10 +408,10 @@ void peripheral_control_thread(Panda *panda) {
       bool charging_disabled = sm["deviceState"].getDeviceState().getChargingDisabled();
       if (charging_disabled != prev_charging_disabled) {
         if (charging_disabled) {
-          panda->set_usb_power_mode(cereal::PandaState::UsbPowerMode::CLIENT);
+          panda->set_usb_power_mode(cereal::PeripheralState::UsbPowerMode::CLIENT);
           LOGW("TURN OFF CHARGING!\n");
         } else {
-          panda->set_usb_power_mode(cereal::PandaState::UsbPowerMode::CDP);
+          panda->set_usb_power_mode(cereal::PeripheralState::UsbPowerMode::CDP);
           LOGW("TURN ON CHARGING!\n");
         }
         prev_charging_disabled = charging_disabled;
