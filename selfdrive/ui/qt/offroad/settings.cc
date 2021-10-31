@@ -107,7 +107,7 @@ DevicePanel::DevicePanel(QWidget* parent) : ListWidget(parent) {
   reset_layout->setSpacing(30);
 
   // reset calibration button
-  QPushButton *restart_openpilot_btn = new QPushButton("Soft restart");
+  QPushButton *restart_openpilot_btn = new QPushButton("소프트 재시작");
   restart_openpilot_btn->setStyleSheet("height: 120px;border-radius: 15px;background-color: #393939;");
   reset_layout->addWidget(restart_openpilot_btn);
   QObject::connect(restart_openpilot_btn, &QPushButton::released, [=]() {
