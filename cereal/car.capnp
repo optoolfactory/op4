@@ -131,6 +131,9 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     autoLaneChange @107;
     slowingDownSpeed @108;
     slowingDownSpeedSound @109;
+    
+    # scc smoother
+    sccSmootherStatus @110;    
   }
 }
 
@@ -326,6 +329,10 @@ struct CarControl {
     roadLimitSpeedLeftDist @6 :UInt32;
 
     autoTrGap @7 :UInt32;
+    
+    state @8 :UInt32;
+    cruiseVirtualMaxSpeed @9 :Float32;
+    cruiseRealMaxSpeed @10 :Float32;
   }
 
   struct Actuators {
