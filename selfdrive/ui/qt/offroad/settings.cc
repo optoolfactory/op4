@@ -132,8 +132,6 @@ DevicePanel::DevicePanel(QWidget* parent) : ListWidget(parent) {
     }
   });
 
-  main_layout->addWidget(horizontal_line());
-  main_layout->addLayout(reset_layout);
 
   // Settings and buttons - JPR
   const char* gitpull = "sh /data/openpilot/gitpull.sh";
@@ -144,8 +142,6 @@ DevicePanel::DevicePanel(QWidget* parent) : ListWidget(parent) {
       QTimer::singleShot(1000, []() { Hardware::reboot(); });
     }
   });
-  main_layout->addWidget(gitpullbtn);
-  main_layout->addWidget(horizontal_line());
   
   // offroad-only buttons
   
