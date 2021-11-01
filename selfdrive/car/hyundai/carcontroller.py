@@ -178,7 +178,7 @@ class CarController():
       self.last_lead_distance = 0
 
     # scc smoother
-    self.scc_smoother.update(enabled, can_sends, self.packer, CC, CS, frame, controls)
+    self.scc_smoother.update(enabled, can_sends, self.packer, CC, CS, frame, apply_accel, controls)
 
     # send scc to car if longcontrol enabled and SCC not on bus 0 or ont live
     if self.longcontrol and CS.cruiseState_enabled and (CS.scc_bus or not self.scc_live):
