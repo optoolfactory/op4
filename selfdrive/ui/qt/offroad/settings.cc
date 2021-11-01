@@ -141,8 +141,9 @@ DevicePanel::DevicePanel(QWidget* parent) : ListWidget(parent) {
   QObject::connect(gitpullbtn, &QPushButton::released, [=]() {
     if (ConfirmationDialog::confirm("소프트웨어 업데이트를 하시겠습니까?", this)) {
        QTimer::singleShot(1000, []() { Hardware::reboot(); });
-    }                                            
-                                            
+      });
+    }
+  });
                                             
 
   // offroad-only buttons
