@@ -132,19 +132,7 @@ DevicePanel::DevicePanel(QWidget* parent) : ListWidget(parent) {
     }
   });
 
-
-  // Settings and buttons - JPR
-  const char* gitpull = "sh /data/openpilot/gitpull.sh";
-  QPushButton *gitpullbtn = new QPushButton(""소프트웨어 업데이트와 재부팅");
-    gitpullbtn->setStyleSheet("height: 120px;border-radius: 15px;background-color: #393939;");
-  reset_layout->addWidget(gitpullbtn);
-  QObject::connect(gitpullbtn, &QPushButton::released, [=]() {
-    if (ConfirmationDialog::confirm("소프트웨어 업데이트를 하시겠습니까?", this)) {
-       QTimer::singleShot(1000, []() { Hardware::reboot(); });
-      });
-    }
-  });
-                                            
+                                           
 
   // offroad-only buttons
   
