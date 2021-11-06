@@ -74,6 +74,14 @@ class CarController():
   def update(self, enabled, CS, frame, CC, actuators, pcm_cancel_cmd, visual_alert,
              left_lane, right_lane, left_lane_depart, right_lane_depart, set_speed, lead_visible, controls):
 
+    # *** compute control surfaces ***
+
+    # gas and brake
+    apply_accel = actuators.accel / CarControllerParams.ACCEL_SCALE
+    apply_accel, self.accel_steady = accel_hysteresis(apply_accel, self.accel_steady)
+    apply_accel = self.scc_smoother.get_accel(CS, controls.sm, apply_accel)
+    apply_accel = clip(apply_accel * CarControllerParams.ACCEL_SCALE,
+                       CarControllerParams.ACCEL_MIN, CarControllerParams.ACCEL_MAX)
 
     # Steering Torque
     new_steer = int(round(actuators.steer * CarControllerParams.STEER_MAX))
