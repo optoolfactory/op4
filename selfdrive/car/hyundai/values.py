@@ -6,6 +6,7 @@ Ecu = car.CarParams.Ecu
 
 class CarControllerParams:
 
+  ACCEL_HYST_GAP = 0.02  # don't change accel command for small oscilalitons within this value
   ACCEL_MAX = 2.0
   ACCEL_MIN = -3.8
   ACCEL_SCALE = 3.0  # max(ACCEL_MAX, -ACCEL_MIN)
