@@ -60,6 +60,7 @@ class CarController():
   def __init__(self, dbc_name, CP, VM):
     self.car_fingerprint = CP.carFingerprint
     self.packer = CANPacker(dbc_name)
+    self.accel_steady = 0
     self.apply_steer_last = 0
     self.steer_rate_limited = False
     self.lkas11_cnt = 0
@@ -114,6 +115,7 @@ class CarController():
     if not lkas_active:
       apply_steer = 0
 
+    self.apply_accel_last = apply_accel
     self.apply_steer_last = apply_steer
 
     sys_warning, sys_state, left_lane_warning, right_lane_warning = \
@@ -124,6 +126,8 @@ class CarController():
     enabled_speed = 38 if CS.is_set_speed_in_mph else 60
     if clu11_speed > enabled_speed or not lkas_active:
       enabled_speed = clu11_speed
+
+    controls.clu_speed_ms = clu11_speed * CS.speed_conv_to_ms
 
     if not (min_set_speed < set_speed < 255 * CV.KPH_TO_MS):
       set_speed = min_set_speed
@@ -201,6 +205,12 @@ class CarController():
     controls.apply_accel = apply_accel
     aReqValue = CS.scc12["aReqValue"]
     controls.aReqValue = aReqValue
+
+    if aReqValue < controls.aReqValueMin:
+      controls.aReqValueMin = controls.aReqValue
+
+    if aReqValue > controls.aReqValueMax:
+      controls.aReqValueMax = controls.aReqValue
 
     # send scc to car if longcontrol enabled and SCC not on bus 0 or ont live
     if self.longcontrol and CS.cruiseState_enabled and (CS.scc_bus or not self.scc_live):
