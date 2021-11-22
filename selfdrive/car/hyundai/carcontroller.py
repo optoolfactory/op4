@@ -90,7 +90,7 @@ class CarController():
     # gas and brake
     apply_accel = actuators.accel / CarControllerParams.ACCEL_SCALE
     apply_accel, self.accel_steady = accel_hysteresis(apply_accel, self.accel_steady)
-    apply_accel = self.scc_smoother.get_apply_accel(CS, controls.sm, apply_accel)
+    apply_accel = self.scc_smoother.get_apply_accel(CS, controls.sm, apply_accel, stopping)
     apply_accel = clip(apply_accel * CarControllerParams.ACCEL_SCALE,
                        CarControllerParams.ACCEL_MIN, CarControllerParams.ACCEL_MAX)
 
